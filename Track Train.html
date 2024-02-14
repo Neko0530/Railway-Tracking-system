@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-
+    scale=1.0">                
+    <title>Track Train</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;1,100;1,500;1,800&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    min-height: 150vh;
+   width: 100%;
+   background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/railwayimg.jpg);
+   background-position: center;
+   background-size: cover;
+   position: relative;
+   opacity: 70%;
+}
+h1{
+    font-size: 45px;
+    color: rgb(10, 10, 10);
+}
+   
+Label{
+    
+    list-style-type: none;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-top: 25px;
+    margin-left: 30px;
+}
+Label #setdate{
+    left: 40px;
+    top: 25px;
+    font-size: 35px;
+    
+    margin-top: 25px;
+    margin-left: 30px;
+}
+Label #settime{
+    left: 40px;
+    top: 25px;
+    font-size: 35px;
+    margin: 50px;
+    padding: 50px;
+}
+td,
+th{
+    margin-top: 25px;
+    margin-left: 30px;
+    padding: 50px;
+
+}
+
+
+</style>
+<body>
+    <h1><I>Track Your Train Here:</I></h1>
+    
+    <form>
+        <Label>Date: </Label>
+        <input type="date"/><br>
+        <input type="submit" id="setdate"><br>
+        <Label>Time: </Label>
+        <input type="time"/><br>
+        <input type="submit" id="settime"><br>
+        <tr>
+            <th>Enter Train No:</th>
+            <td><input type="text" name="Enter Train No"</td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="Submit"></td>
+    
+        </tr>
+    </form>
+</body>
+</html>

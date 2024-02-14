@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <h1>APP NAME</h1>
+  <style>
+    input[type=text] {
+
+      width: 100%;
+
+      padding: 12px 20px;
+
+      margin: 8px 0;
+
+      box-sizing: border-box;
+
+      border: none;
+
+      background-color: #3CBC8D;
+
+      color: white;
+
+    }
+
+    .button {
+
+      background-color: #4B0082;
+
+      border: none;
+
+      color: white;
+
+      padding: 16px 32px;
+
+      text-align: center;
+
+      text-decoration: none;
+
+      display: inline-block;
+
+      font-size: 16px;
+
+      margin: 19px 75px;
+
+      -webkit-transition-duration: 0.4s;
+
+      transition-duration: 0.4s;
+
+      cursor: pointer;
+
+    }
+
+
+
+    .button1 {
+
+      background-color: white;
+
+      color: black;
+
+      border: 2px solid #4B0082;
+
+    }
+
+
+
+    .button1:hover {
+
+      background-color: #000080;
+
+      color: white;
+
+    }
+
+    }
+
+    body {
+
+      font-family: "Lato", sans-serif;
+    
+           
+
+
+
+    }
+
+
+
+    .sidenav {
+
+      height: 100%;
+
+      width: 0;
+
+      position: fixed;
+
+      z-index: 1;
+
+      top: 0;
+
+      left: 0;
+
+      background-color: #95B9C7;
+
+      overflow-x: hidden;
+
+      transition: 0.5s;
+
+      padding-top: 60px;
+
+    }
+
+
+
+    .sidenav a {
+
+      padding: 8px 8px 8px 32px;
+
+      text-decoration: none;
+
+      font-size: 25px;
+
+      color: #000000;
+
+      display: block;
+
+      transition: 0.3s;
+
+    }
+
+
+
+    .sidenav a:hover {
+
+      color: #f1f1f1;
+
+    }
+
+
+
+    .sidenav .closebtn {
+
+      position: absolute;
+
+      top: 0;
+
+      right: 25px;
+
+      font-size: 36px;
+
+      margin-left: 50px;
+
+    }
+
+
+
+    #main {
+
+      transition: margin-left .5s;
+
+      padding: 16px;
+
+    }
+
+    .main {
+
+      padding: 16px;
+
+      margin-top: 30px;
+
+      height: 1500px @media screen and (max-height: 450px) {
+
+        .sidenav {
+          padding-top: 15px;
+        }
+
+        .sidenav a {
+          font-size: 18px;
+        }
+
+      }
+
+
+
+      </form></form>
+  </style>
+
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+
+  <div id="mySidenav" class="sidenav">
+
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <a href="#">
+      <form method="get" action="railway.php">
+
+        Live Train Status:<input type="text" name="t_no" /><br>
+
+    </a>
+
+    <a href="#">PNR : <input type="text" name="PNR" /></a>
+
+    
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+  <div id="main">
+
+
+
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; SERVICES</span>
+
+  </div>
+
+
+
+
+
+  <script>
+    function openNav() {
+
+      document.getElementById("mySidenav").style.width = "250px";
+
+      document.getElementById("main").style.marginLeft = "250px";
+
+    }
+
+
+
+    function closeNav() {
+
+      document.getElementById("mySidenav").style.width = "0";
+
+      document.getElementById("main").style.marginLeft = "0";
+
+
+
+    }
+  </script>
+
+
+
+  <?php
+
+  $t_no = $_GET['t_no'];
+
+  $date = $_GET['date'];
+
+  echo $t_no . "<br>";
+
+  echo $date;
+
+  $y = substr($date, 0, 4);
+
+  $m = substr($date, 5, 2);
+
+  $d = substr($date, 8, 2);
+
+  $new_date = $d . "-" . $m . "-" . $y;
+
+  echo "<br>" . $new_date;
+
+  $url = "https://api.railwayapi.com/v2/live/train/" . $t_no . "/date/" . $new_date . "/apikey/4dx4jey0hh/";
+
+  $data = file_get_contents($url);
+
+  $json = json_decode($data, true);
+
+  $res = $json['response_code'];
+
+  echo "<br>" . $res;
+
+  echo "<br> Current Position : " . $json['position'];
+
+  echo "<br>" . $json['current_station']['name'];
+
+  $i = 0;
+
+  echo "<table border=2><tr><td>S.No.</td><td>Station Name</td><td>Late / early</td><td>Arrived/ Not</td></tr>";
+
+  while (isset($json['route'][$i]['station']['name'])) {
+
+    $num = $i + 1;
+
+    echo "<tr><td>" . $num . "</td>";
+
+    echo "<td>" . $json['route'][$i]['station']['name'] . "</td>";
+
+    echo "<td>" . $json['route'][$i]['latemin'] . "</td>";
+
+    if ($json['route'][$i]['has_arrived']) {
+
+      echo "<td> Arrived </td>";
+    } else {
+
+      echo "<td>Not Arrived Yet</td>";
+    }
+
+    $i++;
+  }
+
+  echo "</table>";
+
+  ?>
+
+
+
+
+
+
+
+</body>
+
+</html>
